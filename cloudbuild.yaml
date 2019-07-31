@@ -10,6 +10,6 @@ steps:
     env:
      - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/sunnyvale-academy/helidon_helloworld:$TAG_NAME', '.']
+    args: ['build', '-t', 'gcr.io/sny-prg-dvs-01-01-00/helidon_helloworld:$TAG_NAME', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/sunnyvale-academy/helidon_helloworld:$TAG_NAME']
+    args: ['push', 'gcr.io/sny-prg-dvs-01-01-00/helidon_helloworld:$TAG_NAME']
