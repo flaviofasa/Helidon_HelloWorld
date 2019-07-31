@@ -1,0 +1,12 @@
+steps:
+  - name: 'ubuntu'
+    args: ['bash', './buildscripts/replace_pom_version.sh']
+    env:
+     - 'TAG_NAME=$TAG_NAME'
+  - name: maven:3.6.1-jdk-12
+    entrypoint: 'mvn'
+    args: ['clean', 'install']
+artifacts:
+  objects:
+    location: 'gs://${_BUCKET_NAME}/${_GROUP_ID}/${_ARTIFACT_ID}/$TAG_NAME'
+    paths: ['target/*.jar']
