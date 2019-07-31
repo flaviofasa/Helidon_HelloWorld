@@ -1,12 +1,15 @@
 steps:
   - name: 'ubuntu'
-    args: ['bash', './buildscripts/replace_pom_version.sh']
+    args: ['bash', './buildscripts/create_json_auth_file.sh']
     env:
-     - 'TAG_NAME=$TAG_NAME'
+     - 'GOOGLE_APPLICATION_CREDENTIALS_CONTENT=${_GOOGLE_APPLICATION_CREDENTIALS_CONTENT}'
+     - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
   - name: maven:3.6.1-jdk-12
     entrypoint: 'mvn'
     args: ['clean', 'install']
-artifacts:
-  objects:
-    location: 'gs://${_BUCKET_NAME}/${_GROUP_ID}/${_ARTIFACT_ID}/$TAG_NAME'
-    paths: ['target/*.jar']
+    env:
+     - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/sunnyvale-academy/helidon_helloworld:$TAG_NAME', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/sunnyvale-academy/helidon_helloworld:$TAG_NAME']
