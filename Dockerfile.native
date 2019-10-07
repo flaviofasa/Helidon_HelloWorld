@@ -35,6 +35,7 @@ RUN mvn package -Pnative-image -Dnative.image.skip -DskipTests
 #ADD src src
 #RUN mvn package -Pnative-image -Dnative.image.buildStatic -DskipTests
 
+RUN ls -l /workspace/target
 RUN echo "done!"
 
 # 2nd stage, build the runtime image

@@ -5,7 +5,7 @@ steps:
      - 'GOOGLE_APPLICATION_CREDENTIALS_CONTENT=${_GOOGLE_APPLICATION_CREDENTIALS_CONTENT}'
      - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', 'Dockerfile.native', '--build-arg', 'GOOGLE_APPLICATION_CREDENTIALS=sny-prg-dvs-01-01-00-d6ee8c94b0e7.json', '-t', 'gcr.io/sny-prg-dvs-01-01-00/helidon_helloworld:$TAG_NAME', '.']
+    args: ['build', '-f', 'Dockerfile.native', '--build-arg', 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}', '-t', 'gcr.io/sny-prg-dvs-01-01-00/helidon_helloworld:$TAG_NAME', '.']
     env:
      - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
   - name: 'gcr.io/cloud-builders/docker'
