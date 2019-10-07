@@ -17,7 +17,9 @@
 # 1st stage, build the app
 FROM helidon/jdk8-graalvm-maven:19.2.0 as build
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS
+VOLUME /workspace/
+
+ENV GOOGLE_APPLICATION_CREDENTIALS=$_GOOGLE_APPLICATION_CREDENTIALS
 
 WORKDIR /workspace/
 
@@ -36,10 +38,13 @@ RUN echo "done!"
 
 # 2nd stage, build the runtime image
 FROM scratch
+
+VOLUME /workspace/
+
 WORKDIR /workspace/
 
 # Copy the binary built in the 1st stage
-COPY --from=build target/helidon-quickstart-se .
+COPY --from=build /workspace/target/helidon-quickstart-se .
 
 ENTRYPOINT ["./helidon-quickstart-se"]
 
