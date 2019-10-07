@@ -35,7 +35,6 @@ RUN mvn package -Pnative-image -Dnative.image.skip -DskipTests
 ADD src src
 RUN mvn package -Pnative-image -Dnative.image.buildStatic -DskipTests
 
-RUN find /workspace/target
 RUN echo "done!"
 
 # 2nd stage, build the runtime image
@@ -44,8 +43,8 @@ FROM scratch
 WORKDIR /workspace
 
 # Copy the binary built in the 1st stage
-COPY --from=build /workspace/target/helidon-quickstart-se .
+COPY --from=build /workspace/target/Helidon_HelloWorld .
 
-ENTRYPOINT ["./helidon-quickstart-se"]
+ENTRYPOINT ["./Helidon_HelloWorld"]
 
 EXPOSE 8080
