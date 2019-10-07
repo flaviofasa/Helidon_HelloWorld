@@ -17,15 +17,17 @@
 # 1st stage, build the app
 FROM helidon/jdk8-graalvm-maven:19.2.0 as build
 
-ENV GOOGLE_APPLICATION_CREDENTIALS $GOOGLE_APPLICATION_CREDENTIALS
+ARG GOOGLE_APPLICATION_CREDENTIALS
 
+RUN echo $GOOGLE_APPLICATION_CREDENTIALS
 
 WORKDIR /workspace
 
 # Create a first layer to cache the "Maven World" in the local repository.
 # Incremental docker builds will always resume after that, unless you update
 # the pom
-ADD * ./
+ADD pom.xml ./
+ADD $GOOGLE_APPLICATION_CREDENTIALS .
 RUN mvn package -Pnative-image -Dnative.image.skip -DskipTests
 
 # Do the Maven build!
