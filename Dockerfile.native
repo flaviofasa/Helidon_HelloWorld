@@ -25,7 +25,7 @@ WORKDIR /workspace
 # Create a first layer to cache the "Maven World" in the local repository.
 # Incremental docker builds will always resume after that, unless you update
 # the pom
-ADD * .
+ADD * ./
 RUN mvn package -Pnative-image -Dnative.image.skip -DskipTests
 
 # Do the Maven build!
