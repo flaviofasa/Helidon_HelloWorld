@@ -168,7 +168,7 @@
         <dependency>
             <groupId>com.world</groupId>
             <artifactId>world</artifactId>
-            <version>1564567718</version>
+            <version>1570403390</version>
         </dependency>
         <dependency>
             <groupId>io.helidon.bundles</groupId>
