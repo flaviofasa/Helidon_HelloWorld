@@ -17,18 +17,15 @@
 # 1st stage, build the app
 FROM helidon/jdk8-graalvm-maven:19.2.0 as build
 
+ENV GOOGLE_APPLICATION_CREDENTIALS $GOOGLE_APPLICATION_CREDENTIALS
 
-#ENV GOOGLE_APPLICATION_CREDENTIALS 
 
-
-RUN echo "GOOGLE_APPLICATION_CREDENTIALS = $GOOGLE_APPLICATION_CREDENTIALS"
-
-WORKDIR /workspace/
+WORKDIR /workspace
 
 # Create a first layer to cache the "Maven World" in the local repository.
 # Incremental docker builds will always resume after that, unless you update
 # the pom
-#ADD pom.xml .
+ADD * .
 RUN mvn package -Pnative-image -Dnative.image.skip -DskipTests
 
 # Do the Maven build!
@@ -41,9 +38,7 @@ RUN echo "done!"
 # 2nd stage, build the runtime image
 FROM scratch
 
-VOLUME /workspace/
-
-WORKDIR /workspace/
+WORKDIR /workspace
 
 # Copy the binary built in the 1st stage
 COPY --from=build /workspace/target/helidon-quickstart-se .
