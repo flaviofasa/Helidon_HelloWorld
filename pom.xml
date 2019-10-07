@@ -205,6 +205,10 @@
     <profiles>
         <profile>
             <id>native-image</id>
+            <properties>
+                <maven.compiler.source>8</maven.compiler.source>
+                <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
