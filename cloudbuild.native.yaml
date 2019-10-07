@@ -4,12 +4,9 @@ steps:
     env:
      - 'GOOGLE_APPLICATION_CREDENTIALS_CONTENT=${_GOOGLE_APPLICATION_CREDENTIALS_CONTENT}'
      - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
-  - name: helidon/jdk8-graalvm-maven:19.2.0
-    entrypoint: 'mvn'
-    args: ['package','-Pnative-image','-Dnative.image.skip','-DskipTests']
-    env:
-     - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-f', 'Dockerfile.native', '-t', 'gcr.io/sny-prg-dvs-01-01-00/helidon_helloworld:$TAG_NAME', '.']
+    env:
+     - 'GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS}'
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/sny-prg-dvs-01-01-00/helidon_helloworld:$TAG_NAME']
