@@ -2,8 +2,8 @@ FROM scratch
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
-COPY  /helidon/target/helidon-quickstart-se .
+COPY  /helidon/target/* .
 
-ENTRYPOINT ["./helidon-quickstart-se"]
+# ENTRYPOINT ["./helidon-quickstart-se"]
 
 EXPOSE 8080
