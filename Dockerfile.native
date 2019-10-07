@@ -19,7 +19,7 @@ FROM helidon/jdk8-graalvm-maven:19.2.0 as build
 
 ENV GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS
 
-#WORKDIR /helidon
+WORKDIR /workspace/
 
 # Create a first layer to cache the "Maven World" in the local repository.
 # Incremental docker builds will always resume after that, unless you update
@@ -36,7 +36,7 @@ RUN echo "done!"
 
 # 2nd stage, build the runtime image
 FROM scratch
-#WORKDIR /helidon
+WORKDIR /workspace/
 
 # Copy the binary built in the 1st stage
 COPY --from=build target/helidon-quickstart-se .
